@@ -3,9 +3,9 @@ import { useState } from "react";
 
 export default function Modal({ addToDo, closeModal }) {
   const [input, setInput] = useState("");
-  const handleChange = (e) => {
+  const handleChange = (event) => {
     // console.log(e.target.value);
-    setInput(e.target.value);
+    setInput(event.target.value);
   };
 
   return (
@@ -22,7 +22,7 @@ export default function Modal({ addToDo, closeModal }) {
         type="submit"
         className="modal-add-button"
         onClick={() => {
-          if (input !== "") {
+          if (input.trim()) {
             addToDo(input);
             setInput("");
             closeModal();

@@ -4,79 +4,79 @@ import { useState, useEffect } from "react";
 import TASK_DOTS from "./Images/ThreeDots.svg";
 import Modal from "./Modal";
 import DeleteModal from "./DeleteModal.js";
-import MoveToTrashModal from "./MoveToTrashModal.js";
+import ToTrashModal from "./ToTrashModal.js";
 import { v4 as uuid } from "uuid";
 
-const tasks = [
+const list = [
   {
     id: uuid(),
     content: "find internship",
     status: "To Do",
     checked: true,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "watch lectures - 3times",
     status: "Done",
     checked: true,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "get stressful education",
     status: "Done",
     checked: true,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "remember my code",
     status: "To Do",
     checked: false,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
-    content: "set alarm for office hours",
+    content: "call mom",
     status: "Done",
     checked: false,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "do not sleep until ToDo app is done ",
     status: "To Do",
     checked: false,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "stop procrastinating",
     status: "Trash",
     checked: true,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "buy MCT oil",
     status: "Trash",
     checked: false,
-    isModalOpen: false,
+    opened: false,
   },
   {
     id: uuid(),
     content: "eat vegetables",
     status: "Trash",
     checked: true,
-    isModalOpen: false,
+    opened: false,
   },
 ];
 
 export default function Main() {
-  const [items, setItems] = useState(tasks); // перезаписываем массив
-  const [filter, setFilter] = useState("To Do"); //используем для фильтра и изменения надписи темы
-  const [isAddModalShown, setIsAddModalShown] = useState(false); //открытие и закрытие моадльного окна для добавления элементов
+  const [items, setItems] = useState(list); 
+  const [filter, setFilter] = useState("To Do"); 
+  const [isAddModalShown, setIsAddModalShown] = useState(false); 
 
   // переключатель цвета button
   const [isActiveToDo, setIsActiveToDo] = useState(true);
@@ -99,12 +99,10 @@ export default function Main() {
     setIsActiveTrash(true);
   };
 
-  // функция для открытия модального окна для добавления todo
   const openAddModal = () => {
     setIsAddModalShown(!isAddModalShown);
   };
 
-  // распознование включения галочки в checkbox
   const handleCheck = (keyFromCheck) => {
     const index = items.findIndex((item) => item.id === keyFromCheck);
     const oldObject = items[index];
@@ -132,20 +130,18 @@ export default function Main() {
     }
   };
 
-  // отображение модального окна для перемещения и удаления тудушек
   const handleModal = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
     const newObject = { ...oldObject };
-    items.forEach((item) => (item.isModalOpen = false));
-    newObject.isModalOpen = !newObject.isModalOpen;
+    items.forEach((item) => (item.opened = false));
+    newObject.opened = !newObject.opened;
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
     return setItems(newItems);
   };
 
-  // adding new todos in a modal window
   const addToDo = (todo) => {
     const newItem = {
       id: uuid(),
@@ -156,20 +152,18 @@ export default function Main() {
     return setItems([newItem, ...items]);
   };
 
-  // перемещение тудушек в корзину
   const handleMoveClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
     const newObject = { ...oldObject };
     newObject.status = "Trash";
-    newObject.isModalOpen = false;
+    newObject.opened = false;
     const leftPart = items.slice(0, index);
     const rightPart = items.slice(index + 1, items.length);
     const newItems = [...leftPart, newObject, ...rightPart];
     setItems(newItems);
   };
 
-  // полное удаление тудушек из корзины
   const handleFirstClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const leftPart = items.slice(0, index);
@@ -178,21 +172,20 @@ export default function Main() {
     setItems(newItems);
   };
 
-  // возвращение тудушек в todo или done
   const handleSecondClick = (keyFromClick) => {
     const index = items.findIndex((item) => item.id === keyFromClick);
     const oldObject = items[index];
     const newObject = { ...oldObject };
     if (newObject.checked === true) {
       newObject.status = "Done";
-      newObject.isModalOpen = false;
+      newObject.opened = false;
       const leftPart = items.slice(0, index);
       const rightPart = items.slice(index + 1, items.length);
       const newItems = [...leftPart, newObject, ...rightPart];
       setItems(newItems);
     } else {
       newObject.status = "To Do";
-      newObject.isModalOpen = false;
+      newObject.opened = false;
       const leftPart = items.slice(0, index);
       const rightPart = items.slice(index + 1, items.length);
       const newItems = [...leftPart, newObject, ...rightPart];
@@ -200,7 +193,6 @@ export default function Main() {
     }
   };
 
-  // фильтр отображения todos по категориям
   const filteredData = items.filter((item) => {
     if (filter === "To Do") {
       return item.status === "Done" || item.status === "To Do";
@@ -211,10 +203,8 @@ export default function Main() {
     }
   });
 
-  //changing page title
   document.title = filter;
 
-  // функция чтобы todo стояли выше done
   function compare(a, b) {
     if (a.checked < b.checked) {
       return -1;
@@ -235,8 +225,8 @@ export default function Main() {
             className="categories"
             style={{
               backgroundColor: isActiveToDo
-                ? "rgba(8, 30, 52, 0.42)"
-                : "rgba(8, 30, 52, 0.05)",
+                ? "#081E34"
+                : "#E4E6E7",
               color: isActiveToDo ? "white" : "",
             }}
             onClick={() => {
@@ -249,8 +239,8 @@ export default function Main() {
             className="categories"
             style={{
               backgroundColor: isActiveDone
-                ? "rgba(8, 30, 52, 0.42)"
-                : "rgba(8, 30, 52, 0.05)",
+                ? "#081E34"
+                : "#E4E6E7",
               color: isActiveDone ? "white" : "",
             }}
             onClick={() => {
@@ -263,8 +253,8 @@ export default function Main() {
             className="categories"
             style={{
               backgroundColor: isActiveTrash
-                ? "rgba(8, 30, 52, 0.42)"
-                : "rgba(8, 30, 52, 0.05)",
+                ? "#081E34"
+                : "#E4E6E7",
               color: isActiveTrash ? "white" : "",
             }}
             onClick={() => {
@@ -277,8 +267,7 @@ export default function Main() {
         <div>
           <button
             className="add-button"
-            onClick={openAddModal}
-            style={{ transform: isAddModalShown ? "rotate(45deg)" : "" }}>
+            onClick={openAddModal}>
             <img src={PLUS_SIGN} alt="plus" />
           </button>
           {isAddModalShown && (
@@ -304,14 +293,14 @@ export default function Main() {
                   alt="task menu"
                 />
               </button>
-              {item.isModalOpen &&
+              {item.opened &&
               (item.status === "To Do" || item.status === "Done") ? (
-                <MoveToTrashModal
+                <ToTrashModal
                   onClick={() => {
                     handleMoveClick(item.id);
                   }}
                 />
-              ) : item.isModalOpen && item.status === "Trash" ? (
+              ) : item.opened && item.status === "Trash" ? (
                 <DeleteModal
                   onFirstClick={() => handleFirstClick(item.id)}
                   onSecondClick={() => handleSecondClick(item.id)}
