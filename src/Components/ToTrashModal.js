@@ -1,7 +1,7 @@
 import "./styles.css";
 import TRASH_BIN from "./Images/TrashBin.svg";
 
-export default function MoveToTrash({ onClick }) {
+export default function ToTrash({ onClick }) {
   return (
     <div className="moveToTrash-modal">
       <button onClick={onClick}>
