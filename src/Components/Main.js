@@ -7,78 +7,77 @@ import DeleteModal from "./DeleteModal.js";
 import ToTrashModal from "./ToTrashModal.js";
 import { v4 as uuid } from "uuid";
 
-const list = [
-  {
-    id: uuid(),
-    content: "find internship",
-    status: "To Do",
-    checked: true,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "watch lectures - 3times",
-    status: "Done",
-    checked: true,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "get stressful education",
-    status: "Done",
-    checked: true,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "remember my code",
-    status: "To Do",
-    checked: false,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "call mom",
-    status: "Done",
-    checked: false,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "do not sleep until ToDo app is done ",
-    status: "To Do",
-    checked: false,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "stop procrastinating",
-    status: "Trash",
-    checked: true,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "buy MCT oil",
-    status: "Trash",
-    checked: false,
-    opened: false,
-  },
-  {
-    id: uuid(),
-    content: "eat vegetables",
-    status: "Trash",
-    checked: true,
-    opened: false,
-  },
-];
-
 export default function Main() {
+    const list = [
+        {
+          content: "find internship",
+          status: "To Do",
+          checked: true,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "watch lectures - 3times",
+          status: "Done",
+          checked: true,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "get stressful education",
+          status: "Done",
+          checked: true,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "remember my code",
+          status: "To Do",
+          checked: false,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "call mom",
+          status: "Done",
+          checked: false,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "do not sleep until ToDo app is done ",
+          status: "To Do",
+          checked: false,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "stop procrastinating",
+          status: "Trash",
+          checked: true,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "buy MCT oil",
+          status: "Trash",
+          checked: false,
+          opened: false,
+          id: uuid(),
+        },
+        {
+          content: "eat vegetables",
+          status: "Trash",
+          checked: true,
+          opened: false,
+          id: uuid(),
+        },
+      ];
   const [items, setItems] = useState(list); 
   const [filter, setFilter] = useState("To Do"); 
   const [isAddModalShown, setIsAddModalShown] = useState(false); 
 
-  // переключатель цвета button
+ 
   const [isActiveToDo, setIsActiveToDo] = useState(true);
   const [isActiveDone, setIsActiveDone] = useState(false);
   const [isActiveTrash, setIsActiveTrash] = useState(false);
